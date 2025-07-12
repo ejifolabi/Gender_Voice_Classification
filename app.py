@@ -47,7 +47,7 @@ def extract_features(uploaded_file):
             st.warning("⚠️ Audio contains no valid signal.")
             return None
 
-        Extract features
+        # Extract features
         mfcc = np.mean(librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13).T, axis=0)
         chroma = np.mean(librosa.feature.chroma_stft(y=y, sr=sr).T, axis=0)
         centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr).T, axis=0)
