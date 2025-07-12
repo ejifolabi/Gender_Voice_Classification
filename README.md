@@ -49,7 +49,9 @@ This project uses **real human voice audio recordings** to classify gender (Male
 
 ## ✍️ Author
 Emmanuel Oludare Ejifolabi
+
 AI & Signal Processing Enthusiast
+
 [LinkedIn](https://www.linkedin.com/in/emmagee001) | [GitHub](https://www.github.com/ejifolabi)
 
 
