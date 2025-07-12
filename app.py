@@ -27,23 +27,22 @@ def extract_features(uploaded_file):
     try:
         # Convert uploaded file to WAV in memory
         audio = AudioSegment.from_file(uploaded_file)
-        
-        # Reject files shorter than 0.5 seconds
-        if len(audio) < 500:
-            st.warning("⚠️ Audio is too short (< 0.5s). Please upload a longer file.")
-            return None
-
-        st.write(f"📏 Audio duration: {len(audio)/1000:.2f} seconds")
-
         wav_io = io.BytesIO()
         audio.export(wav_io, format="wav")
         wav_io.seek(0)
 
-        # Load with librosa
+        # Load using librosa
         y, sr = librosa.load(wav_io, sr=22050)
 
         if y.size == 0:
             st.warning("⚠️ Audio contains no valid sound.")
+            return None
+
+        duration = librosa.get_duration(y=y, sr=sr)
+        st.write(f"📏 Audio duration: {duration:.2f} seconds")
+
+        if duration < 0.5:
+            st.warning("⚠️ Audio is too short (< 0.5s). Please upload a longer file.")
             return None
 
         # Extract Features
@@ -53,17 +52,19 @@ def extract_features(uploaded_file):
         zcr = np.mean(librosa.feature.zero_crossing_rate(y=y).T, axis=0)
 
         return np.hstack([mfcc, chroma, centroid, zcr])
-    
+
     except Exception as e:
         st.error(f"❌ Feature extraction failed: {e}")
         return None
 
-# === Streamlit UI ===
+# Streamlit UI
 st.set_page_config(page_title="Voice Gender Classifier", page_icon="🎙️")
 st.title("🎙️ Voice Gender Classifier")
 st.markdown("Upload an audio file (WAV, MP3, M4A, OGG, etc.) and get a gender prediction using AI and signal processing.")
 
 uploaded_file = st.file_uploader("🎧 Upload an audio file", type=["wav", "mp3", "m4a", "flac", "aac", "ogg"])
+
+st.markdown("dESIGNED BY EMMANUEL EJIFOLABI")
 
 if uploaded_file:
     st.audio(uploaded_file, format='audio/wav')
