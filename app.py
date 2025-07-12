@@ -77,5 +77,5 @@ if uploaded_file:
         st.success(f"🧠 Predicted Gender: **{prediction.capitalize()}**")
 
 
-st.markdown("Upload a voice recording ("MODELLED BY: EMMANUEL EJIFOLABI")
+st.markdown("MODELLED BY: EMMANUEL EJIFOLABI")
 
