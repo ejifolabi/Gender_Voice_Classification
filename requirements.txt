@@ -1,8 +1,8 @@
 streamlit
 librosa
+joblib
 numpy
 scikit-learn
-joblib
+pydub
 soundfile
 audioread
-pydub
