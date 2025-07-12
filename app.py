@@ -23,31 +23,27 @@ model = load_model()
 # Extract Audio Features
 def extract_features(uploaded_file):
     try:
-        # Load uploaded audio and convert to mono
+        # Convert uploaded file to WAV in memory
         audio = AudioSegment.from_file(uploaded_file)
-        if audio.channels != 1:
-            st.info("🔁 Converting stereo audio to mono...")
-            audio = audio.set_channels(1)
-
-        # Export to WAV in memory
         wav_io = io.BytesIO()
         audio.export(wav_io, format="wav")
         wav_io.seek(0)
 
-        # Load with librosa
+        # Load using librosa
         y, sr = librosa.load(wav_io, sr=22050)
-        duration = librosa.get_duration(y=y, sr=sr)
-        st.write(f"📏 Audio Duration: {duration:.2f} seconds")
-
-        if duration < 0.5:
-            st.warning("⚠️ Audio too short (< 0.5s). Try a longer recording.")
-            return None
 
         if y.size == 0:
-            st.warning("⚠️ Audio contains no valid signal.")
+            st.warning("⚠️ Audio contains no valid sound.")
             return None
 
-        # Extract features
+        duration = librosa.get_duration(y=y, sr=sr)
+        st.write(f"📏 Audio duration: {duration:.2f} seconds")
+
+        if duration < 0.5:
+            st.warning("⚠️ Audio is too short (< 0.5s). Please upload a longer file.")
+            return None
+
+        # Extract Features
         mfcc = np.mean(librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13).T, axis=0)
         chroma = np.mean(librosa.feature.chroma_stft(y=y, sr=sr).T, axis=0)
         centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr).T, axis=0)
@@ -57,7 +53,7 @@ def extract_features(uploaded_file):
 
     except Exception as e:
         st.error(f"❌ Feature extraction failed: {e}")
-        return None
+        return None   
 
 # Streamlit Interface
 st.set_page_config(page_title="Voice Gender Classifier", page_icon="🎙️")
