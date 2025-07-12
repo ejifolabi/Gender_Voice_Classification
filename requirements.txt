@@ -1,7 +1,6 @@
+streamlit
 librosa
-scikit-learn
-pandas
 numpy
+scikit-learn
 joblib
-kagglehub
 soundfile
