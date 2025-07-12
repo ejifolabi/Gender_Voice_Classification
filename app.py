@@ -10,10 +10,10 @@ def load_model():
 
 model = load_model()
 
-# === Feature Extraction ===
 def extract_features(file):
     try:
-        y, sr = librosa.load(file, sr=22050)
+        # Load audio from any file type
+        y, sr = librosa.load(file, sr=22050, mono=True)
 
         mfcc = np.mean(librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13).T, axis=0)
         chroma = np.mean(librosa.feature.chroma_stft(y=y, sr=sr).T, axis=0)
@@ -22,14 +22,14 @@ def extract_features(file):
 
         return np.hstack([mfcc, chroma, centroid, zcr])
     except Exception as e:
-        st.error(f"Feature extraction failed: {e}")
+        st.error(f"❌ Feature extraction failed: {e}")
         return None
 
 # User Interface
 st.title("🎙️ Voice Gender Classifier")
-st.markdown("Upload a `.wav` audio file and I’ll predict the gender of the speaker using AI and signal processing.")
+st.markdown("Upload a 'wav', 'mp3', 'ogg', 'flac', 'm4a' or 'aac' audio file and I’ll predict the gender of the speaker using AI and signal processing.")
 
-uploaded_file = st.file_uploader("Upload a WAV file", type=["wav"])
+uploaded_file = st.file_uploader("Upload an audio file", type=["wav", "mp3", "ogg", "flac", "m4a", "aac"])
 
 if uploaded_file is not None:
     st.audio(uploaded_file, format='audio/wav')
