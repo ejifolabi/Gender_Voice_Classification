@@ -4,6 +4,11 @@ import streamlit as st
 import librosa
 import numpy as np
 import joblib
+import os
+
+# Point pydub to ffmpeg
+AudioSegment.converter = "/usr/bin/ffmpeg"
+
 
 # Load Trained Model
 @st.cache_resource
