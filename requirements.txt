@@ -1,9 +1,9 @@
-streamlit
-librosa
-joblib
 numpy==1.23.5
 scikit-learn
-pydub
+librosa==0.10.1
+joblib
+streamlit
 soundfile
+pydub
 audioread
 scipy
