@@ -64,7 +64,6 @@ st.markdown("Upload an audio file (WAV, MP3, M4A, OGG, etc.) and get a gender pr
 
 uploaded_file = st.file_uploader("🎧 Upload an audio file", type=["wav", "mp3", "m4a", "flac", "aac", "ogg"])
 
-st.markdown("dESIGNED BY EMMANUEL EJIFOLABI")
 
 if uploaded_file:
     st.audio(uploaded_file, format='audio/wav')
@@ -77,3 +76,6 @@ if uploaded_file:
             st.success(f"🧠 Predicted Gender: **{prediction.capitalize()}**")
         elif model is None:
             st.error("❌ Model failed to load. Please check deployment.")
+
+
+st.markdown("MODELLED BY: EMMANUEL EJIFOLABI")
