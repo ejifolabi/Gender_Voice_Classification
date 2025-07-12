@@ -1,3 +1,5 @@
+# app.py
+
 import streamlit as st
 import numpy as np
 import librosa
@@ -6,44 +8,49 @@ import io
 from pydub import AudioSegment
 import os
 
-# Point to ffmpeg (needed on Streamlit Cloud)
+# Point to ffmpeg path (for Streamlit Cloud compatibility)
 AudioSegment.converter = "/usr/bin/ffmpeg"
 
-# Load Trained Model
+# === Load Trained Model ===
 @st.cache_resource
 def load_model():
     model_path = "models/voice_gender_model.pkl"
     if not os.path.exists(model_path):
-        st.error("Model file not found.")
+        st.error("❌ Model not found.")
         return None
     return joblib.load(model_path)
 
 model = load_model()
 
-# Extract Audio Features
+# === Feature Extraction ===
 def extract_features(uploaded_file):
     try:
-        # Convert uploaded file to WAV in memory
+        st.write("📎 File name:", uploaded_file.name)
+        st.write("📄 MIME type:", uploaded_file.type)
+
+        # Load file into memory using pydub
         audio = AudioSegment.from_file(uploaded_file)
+
+        # Export to .wav without forcing mono
         wav_io = io.BytesIO()
         audio.export(wav_io, format="wav")
         wav_io.seek(0)
 
         # Load using librosa
-        y, sr = librosa.load(wav_io, sr=22050)
-
-        if y.size == 0:
-            st.warning("⚠️ Audio contains no valid sound.")
-            return None
+        y, sr = librosa.load(wav_io, sr=22050, mono=True)  # mono=True for safe feature extraction
 
         duration = librosa.get_duration(y=y, sr=sr)
-        st.write(f"📏 Audio duration: {duration:.2f} seconds")
+        st.write(f"📏 Duration: {duration:.2f} sec")
 
         if duration < 0.5:
-            st.warning("⚠️ Audio is too short (< 0.5s). Please upload a longer file.")
+            st.warning("⚠️ Audio too short (< 0.5s). Please upload a longer clip.")
             return None
 
-        # Extract Features
+        if y.size == 0:
+            st.warning("⚠️ No valid audio detected.")
+            return None
+
+        # Extract features
         mfcc = np.mean(librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13).T, axis=0)
         chroma = np.mean(librosa.feature.chroma_stft(y=y, sr=sr).T, axis=0)
         centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr).T, axis=0)
@@ -53,25 +60,24 @@ def extract_features(uploaded_file):
 
     except Exception as e:
         st.error(f"❌ Feature extraction failed: {e}")
-        return None   
+        return None
 
-# Streamlit Interface
+# === Streamlit App UI ===
 st.set_page_config(page_title="Voice Gender Classifier", page_icon="🎙️")
 st.title("🎙️ Voice Gender Classifier")
-st.markdown("Upload a voice recording (`.wav`, `.mp3`, `.m4a`, `.ogg`, etc.) to predict the gender using AI and signal processing.")
+st.markdown("Upload a voice recording and get the predicted gender using AI and signal processing.")
 
-uploaded_file = st.file_uploader("🎧 Upload an audio file", type=["wav", "mp3", "m4a", "flac", "aac", "ogg"])
+uploaded_file = st.file_uploader(
+    "🎧 Upload an audio file",
+    type=["wav", "mp3", "m4a", "aac", "flac", "ogg"]
+)
 
 if uploaded_file:
-    st.audio(uploaded_file, format='audio/wav')
+    st.audio(uploaded_file, format="audio/wav")
 
-    with st.spinner("🔍 Analyzing audio..."):
+    with st.spinner("🔍 Processing audio..."):
         features = extract_features(uploaded_file)
 
     if features is not None and model is not None:
         prediction = model.predict([features])[0]
         st.success(f"🧠 Predicted Gender: **{prediction.capitalize()}**")
-
-
-st.markdown("MODELLED BY: EMMANUEL EJIFOLABI")
-
