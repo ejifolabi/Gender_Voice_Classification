@@ -55,3 +55,4 @@ AI & Signal Processing Enthusiast
 [LinkedIn](https://www.linkedin.com/in/emmagee001) | [GitHub](https://www.github.com/ejifolabi)
 
 
+### **NOTE:** Work is ongoing to improve the predictions because the model is slightly overfitted
