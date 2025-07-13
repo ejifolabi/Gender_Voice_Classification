@@ -9,14 +9,14 @@ import os
 # For Streamlit Cloud: point to ffmpeg
 AudioSegment.converter = "/usr/bin/ffmpeg"
 
-# === Load Trained Model ===
+# Load Trained Model
 @st.cache_resource
 def load_model():
     return joblib.load("models/voice_gender_model.pkl")
 
 model = load_model()
 
-# === Feature Extraction ===
+# Feature Extraction
 def extract_features(file):
     try:
         # Convert to WAV using pydub
@@ -38,7 +38,7 @@ def extract_features(file):
         st.error(f"❌ Feature extraction failed: {e}")
         return None
 
-# === UI ===
+# User Interface
 st.set_page_config(page_title="Voice Gender Classifier", page_icon="🎙️")
 st.title("🎙️ Voice Gender Classifier")
 st.markdown("Upload an audio file (`.wav`, `.mp3`, `.aac`, `.m4a`, etc.) and I’ll predict the gender using AI and signal processing.")
