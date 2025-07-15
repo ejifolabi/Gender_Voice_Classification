@@ -89,17 +89,18 @@ st.set_page_config(page_title="Voice Gender Recognition", layout="centered")
 st.title("🎤 Voice Gender Recognition")
 st.markdown("Upload a voice sample (≥3 seconds) to predict the speaker's gender.")
 
-uploaded_file = st.file_uploader("Upload audio file", type=["wav", "mp3", "flac", "ogg"])
+uploaded_file = st.file_uploader("Upload audio file", type=["wav", "mp3", "flac", "ogg", "aac"])
 
 analysis_mode = st.radio("Choose Prediction Mode", ["Use First 3 Seconds", "Full Audio Analysis"])
 
 if uploaded_file:
-    # Save temporary file
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
-        temp_path = temp_file.name
-        audio = AudioSegment.from_file(uploaded_file)
-        audio.export(temp_path, format="wav")
-
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
+            # Pydub reads and converts
+            audio = AudioSegment.from_file(uploaded_file)
+            audio.export(temp_file.name, format="wav")  # convert to wav for librosa
+            temp_path = temp_file.name
+            
     # Load audio
     try:
         y, sr = librosa.load(temp_path, sr=SAMPLE_RATE)
