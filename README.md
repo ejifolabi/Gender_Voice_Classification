@@ -30,20 +30,3 @@ voice-gender-recognition/
 ├── README.md               # Project overview and usage
 
 ---
-
-## 📊 Model Training (Summary)
-
-```bash
-Dataset: [Gender Recognition by Voice (Kaggle)](https://www.kaggle.com/datasets/murtadhanajim/gender-recognition-by-voiceoriginal)
-
-Features:
-MFCCs (13)
-Chroma STFT
-Spectral Contrast
-Zero Crossing Rate
-RMS Energy
-
-Model: Random Forest Classifier
-Accuracy: 99% on test set
-
----
