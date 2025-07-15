@@ -12,7 +12,7 @@ import tempfile
 # === CONFIG ===
 SAMPLE_RATE = 16000
 CHUNK_DURATION = 3  # seconds
-MODEL_PATH = "models/gender_model.pkl"
+MODEL_PATH = "models/voice_gender_model.pkl"
 
 # === Feature Extraction ===
 def extract_features(y, sr=16000):
