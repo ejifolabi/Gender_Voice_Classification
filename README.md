@@ -32,7 +32,7 @@ voice-gender-recognition/
 
 ---
 
-## 🎯 How It Works
+# 🎯 How It Works
 
 1. User uploads an audio file (≥ 3 seconds)
 2. The app converts it to `.wav` internally using **pydub**
