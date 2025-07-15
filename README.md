@@ -22,17 +22,22 @@ A professional-grade machine learning web application that predicts the **gender
 
 ## 📂 Project Structure
 
-```bash
 voice-gender-recognition/
-├── app.py                  # Streamlit deployment code
+├── app.py # Streamlit application
+
 ├── models/
-│   └── gender_model.pkl    # Trained ML model (RandomForest)
-├── requirements.txt        # Project dependencies
-├── README.md               # Project overview and usage
+
+│ └── gender_model.pkl # Trained RandomForest model
+
+├── requirements.txt # Python dependencies
+
+├── packages.txt # System dependencies (for FFmpeg)
+
+└── README.md # Project documentation
 
 ---
 
-# 🎯 How It Works
+## 🎯 How It Works
 
 1. User uploads an audio file (≥ 3 seconds)
 2. The app converts it to `.wav` internally using **pydub**
@@ -101,4 +106,3 @@ pip install -r requirements.txt
 
 # Run app
 streamlit run app.py
-
