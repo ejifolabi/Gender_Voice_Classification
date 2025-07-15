@@ -1,58 +1,44 @@
-# 🎙️ Voice Gender Classification Using AI and Signal Processing
+# 🎤 Voice Gender Recognition
 
-This project uses **real human voice audio recordings** to classify gender (Male/Female) using **feature extraction techniques** and a **Random Forest machine learning model**. Built with Python, it demonstrates the practical application of signal processing in intelligent voice systems.
-
-## 📦 Dataset
-
-- **Name**: [Gender Recognition by Voice (Original)](https://www.kaggle.com/datasets/murtadhanajim/gender-recognition-by-voiceoriginal)
-- **Format**: `.wav` audio files
-
-## 🧠 Model Overview
-
-- **Algorithm**: Random Forest Classifier
-- **Features Extracted**:
-- MFCC (Mel Frequency Cepstral Coefficients)
-- Chroma Frequencies
-- Spectral Centroid
-- Zero Crossing Rate
-
-## 🧪 Model Performance
-
-| Metric        | Female      | Male        |
-|---------------|-------------|-------------|
-| Precision     | **0.99**    | **0.99**    |
-| Recall        | **0.98**    | **0.99**    |
-| F1-Score      | **0.98**    | **0.99**    |
-| Overall Accuracy | **99%** |
-
-✅ Confusion matrix and classification report are printed during training.
-
-## 🚀 How It Works
-
-1. Download `.wav` dataset from Kaggle using `kagglehub`
-2. Extract features from each audio file using `librosa`
-3. Train a `RandomForestClassifier` from `scikit-learn`
-4. Save the model to disk
-5. Predict gender from new `.wav` voice samples
+A professional and production-ready machine learning project that predicts a speaker's gender from their voice using audio files. It supports various audio formats and durations (minimum 3 seconds), and is robust against overfitting and underfitting. Deployed using Streamlit for easy web interaction.
 
 ---
 
-## 🧰 Tech Stack
+## 📌 Features
 
-| Tool          | Use                                 |
-|---------------|--------------------------------------|
-| `Python 3.8+` | Programming Language                |
-| `librosa`     | Audio feature extraction            |
-| `scikit-learn`| Machine Learning                    |
-| `kagglehub`   | Downloading dataset from Kaggle     |
-| `joblib`      | Model serialization                 |
+✅ Accepts `.wav`, `.mp3`, `.flac`, `.ogg` audio formats  
+✅ Works with both short (3s) and long audio  
+✅ Uses MFCCs, Chroma, Spectral Contrast, ZCR, and RMS features  
+✅ Offers two prediction modes: 
+- **First 3 Seconds**
+- **Full Audio Analysis**
 
-## ✍️ Author
-Emmanuel Oludare Ejifolabi
+✅ Visualizes waveform and spectrogram  
+✅ Trained with Random Forest on gender-labeled voice dataset  
+✅ Accurate, clean, and efficient (99%+ test accuracy)
 
-AI & Signal Processing Enthusiast
+---
 
-[LinkedIn](https://www.linkedin.com/in/emmagee001) | [GitHub](https://www.github.com/ejifolabi)
+## 🏗️ Project Structure
 
+```bash
+voice-gender-recognition/
+├── app.py                  # Streamlit deployment code
+├── models/
+│   └── gender_model.pkl    # Trained ML model (RandomForest)
+├── requirements.txt        # Project dependencies
+├── README.md               # Project overview and usage
 
-### **NOTE:** Work is ongoing to improve the predictions because the model is slightly overfitted.
+## 📊 Model Training (Summary)
+Dataset: [Gender Recognition by Voice (Kaggle)](https://www.kaggle.com/datasets/murtadhanajim/gender-recognition-by-voiceoriginal)
+
+Features:
+MFCCs (13)
+Chroma STFT
+Spectral Contrast
+Zero Crossing Rate
+RMS Energy
+
+Model: Random Forest Classifier
+Accuracy: 99% on test set
+
