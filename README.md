@@ -15,7 +15,7 @@ A professional and production-ready machine learning project that predicts a spe
 
 ✅ Visualizes waveform and spectrogram  
 ✅ Trained with Random Forest on gender-labeled voice dataset  
-✅ Accurate, clean, and efficient (99%+ test accuracy)
+✅ Accurate, clean, and efficient (99%+ test accuracy).
 
 ---
 
@@ -31,7 +31,7 @@ voice-gender-recognition/
 
 ---
 
-## 📊 Model Training (Summary)
+## 🏗 Model Training (Summary)
 Dataset: [Gender Recognition by Voice (Kaggle)](https://www.kaggle.com/datasets/murtadhanajim/gender-recognition-by-voiceoriginal)
 
 Features:
