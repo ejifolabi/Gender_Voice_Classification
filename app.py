@@ -14,16 +14,7 @@ SAMPLE_RATE = 16000
 CHUNK_DURATION = 3  # seconds
 MODEL_PATH = "models/gender_model.pkl"
 
-# === Preprocessing Functions ===
-def convert_to_wav(input_file):
-    ext = os.path.splitext(input_file)[-1].lower()
-    if ext != ".wav":
-        audio = AudioSegment.from_file(input_file)
-        output_path = input_file.replace(ext, ".wav")
-        audio.export(output_path, format="wav")
-        return output_path
-    return input_file
-
+# === Feature Extraction ===
 def extract_features(y, sr=16000):
     mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
     chroma = librosa.feature.chroma_stft(y=y, sr=sr)
@@ -40,6 +31,7 @@ def extract_features(y, sr=16000):
     ])
     return features
 
+# === Prediction Functions ===
 def predict_single_segment(y, model):
     y = librosa.util.fix_length(y, size=CHUNK_DURATION * SAMPLE_RATE)
     features = extract_features(y).reshape(1, -1)
@@ -70,6 +62,7 @@ def predict_with_sliding_window(y, model):
     final_pred = max(set(results), key=results.count)
     return final_pred, y
 
+# === Visualization ===
 def display_audio_visuals(y, sr):
     st.subheader("Waveform")
     plt.figure(figsize=(10, 2))
@@ -90,24 +83,22 @@ st.title("🎤 Voice Gender Recognition")
 st.markdown("Upload a voice sample (≥3 seconds) to predict the speaker's gender.")
 
 uploaded_file = st.file_uploader("Upload audio file", type=["wav", "mp3", "flac", "ogg", "aac"])
-
 analysis_mode = st.radio("Choose Prediction Mode", ["Use First 3 Seconds", "Full Audio Analysis"])
 
 if uploaded_file:
     try:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
-            # Pydub reads and converts
             audio = AudioSegment.from_file(uploaded_file)
-            audio.export(temp_file.name, format="wav")  # convert to wav for librosa
+            audio.export(temp_file.name, format="wav")
             temp_path = temp_file.name
-            
-    # Load audio
-    try:
+
         y, sr = librosa.load(temp_path, sr=SAMPLE_RATE)
+
         if len(y) < CHUNK_DURATION * sr:
             st.warning("Audio too short. Must be at least 3 seconds.")
         else:
             model = joblib.load(MODEL_PATH)
+
             if analysis_mode == "Use First 3 Seconds":
                 label, audio_used = predict_from_first_chunk(y, model)
             else:
