@@ -114,3 +114,6 @@ if uploaded_file:
 
     except Exception as e:
         st.error(f"Failed to process audio: {e}")
+
+st.markdown("---")
+st.markdown("DEVELOPED BY: EMMANUEL EJIFOLABI")
