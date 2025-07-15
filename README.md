@@ -29,6 +29,8 @@ voice-gender-recognition/
 ├── requirements.txt        # Project dependencies
 ├── README.md               # Project overview and usage
 
+---
+
 ## 📊 Model Training (Summary)
 Dataset: [Gender Recognition by Voice (Kaggle)](https://www.kaggle.com/datasets/murtadhanajim/gender-recognition-by-voiceoriginal)
 
