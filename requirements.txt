@@ -1,9 +1,7 @@
 streamlit
-numpy
-scikit-learn
 librosa
-joblib
-pydub
 soundfile
-audioread
-scipy
+pydub
+scikit-learn
+joblib
+matplotlib
