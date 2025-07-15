@@ -23,6 +23,7 @@ A professional-grade machine learning web application that predicts the **gender
 ## 📂 Project Structure
 
 voice-gender-recognition/
+
 ├── app.py # Streamlit application
 
 ├── models/
