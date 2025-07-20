@@ -81,10 +81,10 @@ voice-gender-recognition/
 
 ### Streamlit Cloud Setup:
 
-1. ✅ `requirements.txt` for Python packages
-2. ✅ `packages.txt` to install FFmpeg on the server
-3. ✅ Model stored in `models/gender_model.pkl`
-4. ✅ Deployed from GitHub
+1. ✅ `requirements.txt` for Python packages.
+2. ✅ `packages.txt` to install FFmpeg on the server.
+3. ✅ Model stored in `models/gender_model.pkl`.
+4. ✅ Deployed from GitHub.
 
 App runs fully in-browser — **no installation needed by end-users**.
 
